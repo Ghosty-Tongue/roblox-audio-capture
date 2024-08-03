@@ -7,7 +7,7 @@
 ## Features
 
 - Monitors the Roblox client’s folder for new audio files.
-- Copies and renames audio files from `.wav` to `.ogg` format.
+- Copies and renames audio files from `binary` to `.ogg` format.
 - Deletes old files from the source directory before and after the monitoring session.
 - Alerts users that audio files may work but might have issues with some audio players.
 - Notes that the `.ogg` files do not retain their original asset names due to Roblox's encryption.
