@@ -40,9 +40,7 @@
 
 ## Usage
 
-1. **Ensure Roblox is running**: Start the Roblox game client before running the script.
-
-2. **Run the script:**
+1. **Run the script:**
 
    ```bash
    python audio.py
