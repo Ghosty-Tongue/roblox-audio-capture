@@ -53,7 +53,7 @@
 ## Important Notes
 
 - The `.ogg` files may not retain their original asset names because Roblox encrypts the original file names. This encryption makes it difficult to determine the original uploaded file name.
-- While the audio files may work, some audio players might have difficulty playing them.
+- While the audio files may work, some audio players might have difficulty playing them. **RECOMMED: VLC**
 
 ## License
 
