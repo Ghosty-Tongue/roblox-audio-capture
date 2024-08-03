@@ -61,4 +61,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Thanks to the Roblox community for providing insights into audio handling within Roblox games.
+- Thanks to the Roblox community for providing insights into audio handling within The Roblox Client.
