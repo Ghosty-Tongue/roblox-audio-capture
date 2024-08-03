@@ -2,7 +2,7 @@
 
 ## Description
 
-**Roblox Audio Capture** is a Python script designed to monitor the Roblox game client's temporary sound folder, automatically back up audio files, and rename them for easier access. The script captures audio files as they are created by Roblox, copies them to a designated backup directory, and provides a warning about potential playback issues.
+**Roblox Audio Capture** is a Python script designed to monitor the Roblox game client's temporary sound folder, automatically back up audio files, and rename them for easier access.
 
 ## Features
 
