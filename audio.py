@@ -3,14 +3,18 @@ import shutil
 import time
 import threading
 import psutil
+import logging
 
 source_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Temp', 'Roblox', 'sounds')
+http_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Temp', 'Roblox', 'http')
 destination_dir = os.path.join(os.path.expanduser('~'), 'Downloads', 'sound_backup')
 
 if not os.path.exists(destination_dir):
     os.makedirs(destination_dir)
 
 processed_files = set()
+
+logging.basicConfig(filename='roblox_sound_backup.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def copy_and_rename_file(src_path):
     try:
@@ -19,9 +23,9 @@ def copy_and_rename_file(src_path):
         backup_path = os.path.join(destination_dir, new_filename)
         
         shutil.copy2(src_path, backup_path)
-        print(f'File copied and renamed to: {new_filename}')
+        logging.info(f'File copied and renamed to: {new_filename}')
     except Exception as e:
-        print(f'Error copying file {os.path.basename(src_path)}: {e}')
+        logging.error(f'Error copying file {os.path.basename(src_path)}: {e}')
 
 def process_file(file_path):
     filename = os.path.basename(file_path)
@@ -42,7 +46,7 @@ def check_for_new_files():
 
             time.sleep(1)
         except Exception as e:
-            print(f'Error checking for new files: {e}')
+            logging.error(f'Error checking for new files: {e}')
             time.sleep(1)
 
 def is_roblox_client_running():
@@ -51,12 +55,12 @@ def is_roblox_client_running():
             return True
     return False
 
-def clean_up_sounds_directory():
-    for filename in os.listdir(source_dir):
-        file_path = os.path.join(source_dir, filename)
+def clean_up_directory(directory):
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
         if os.path.isfile(file_path):
             os.remove(file_path)
-    print('Cleaned up old files in the sounds directory.')
+    logging.info(f'Cleaned up files in the directory: {directory}')
 
 if __name__ == "__main__":
     print('Welcome! This script helps you grab audio files from Roblox games.')
@@ -65,13 +69,15 @@ if __name__ == "__main__":
     print('Note: The .ogg files do not retain their original asset names because Roblox encrypts the original file names.')
     print('This encryption makes it difficult to determine the original uploaded file name.')
 
-    print('Cleaning up old files in the sounds directory...')
-    clean_up_sounds_directory()
+    logging.info('Cleaning up old files in the sounds and http directories...')
+    clean_up_directory(source_dir)
+    clean_up_directory(http_dir)
 
     print('Waiting for the Roblox client to start...')
     while not is_roblox_client_running():
         time.sleep(1)
 
+    logging.info('Roblox client detected. Starting file monitoring...')
     print('Roblox client detected. Starting file monitoring...')
 
     for filename in os.listdir(source_dir):
@@ -87,7 +93,10 @@ if __name__ == "__main__":
         while is_roblox_client_running():
             time.sleep(1)
     except KeyboardInterrupt:
+        logging.info('Stopped by user')
         print('Stopped by user')
 
-    clean_up_sounds_directory()
+    clean_up_directory(source_dir)
+    clean_up_directory(http_dir)
+    logging.info('Roblox client has closed. Exiting...')
     print('Roblox client has closed. Exiting...')
